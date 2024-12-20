@@ -166,6 +166,9 @@ class LCUStatePreparationBox(RegisterBox):
 
         super().__init__(qreg, circ)
 
+        self._postselect.update({q: 0 for qreg in self.qreg.coeffs for q in qreg})
+        self._postselect.update({q: 0 for qreg in self.qreg.block for q in qreg})
+
     @property
     def n_qubits_state(self) -> list[int]:
         """Return the number of state qubits for each variable."""

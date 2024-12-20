@@ -5,7 +5,14 @@ from .lcu_state_preparation import (
     SeparableLCUStatePreparationBox,
 )
 
+from .lcu_state_preparation_block_encoding import (
+    FourierBlockEncoding,
+    ChebychevBlockEncoding,
+)
+
 __all__ = [
     "LCUStatePreparationBox",
     "SeparableLCUStatePreparationBox",
+    "FourierBlockEncoding",
+    "ChebychevBlockEncoding",
 ]
