@@ -165,9 +165,9 @@ class EvaluateLCU:
         if not self.compile_only:
             qubit_ordering = [
                 y
-                for x in self.lcu_state_prep.regs_coeffs
-                + self.lcu_state_prep.regs_block_encoding
-                + self.lcu_state_prep.regs_state
+                for x in self.lcu_state_prep.qreg.coeffs
+                + self.lcu_state_prep.qreg.block
+                + self.lcu_state_prep.qreg.state
                 for y in list(x)
             ]
             statevector_backend = AerStateBackend()
