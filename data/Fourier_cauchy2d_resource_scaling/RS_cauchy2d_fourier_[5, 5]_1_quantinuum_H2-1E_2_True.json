@@ -1,0 +1,10 @@
+{
+    "n_1qbs": 91,
+    "n_2qbs": 56,
+    "n_qubits": 14,
+    "success_probabilities": 0.17666746578516007,
+    "max_errors_f": null,
+    "max_errors_approx": null,
+    "eval_real": null,
+    "eval_imag": null
+}
