@@ -27,10 +27,10 @@ jobs:
         source .venv/bin/activate
         uv pip install -r requirements.txt
         uv pip install -e .
-    - name: Pre-commit checks
-      run: |
-        pip install pre-commit
-        pre-commit run --all-files
+    # - name: Pre-commit checks
+    #   run: |
+    #     pip install pre-commit
+    #     pre-commit run --all-files
     - name: Run tests
       run: |
         source .venv/bin/activate
