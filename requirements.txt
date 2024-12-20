@@ -16,6 +16,7 @@ numpy<2.0
 numba
 pandas
 pandas-stubs
+scipy
 sympy==1.12
 stim
 nbconvert
