@@ -133,106 +133,6 @@ def get_projector_matrix3(
     return projector
 
 
-def gaussian_elimination(
-    fun: Callable,
-    options=None,
-) -> NDArrayFloat:
-    """Implements the Gaussian elimination algorithm in Fig. 2.1 of
-    https://people.maths.ox.ac.uk/trefethen/publication/PDF/townsend_trefethen13.pdf.
-
-    The actual algorithm implemented in `chebfun2` includes heuristic steps,
-    e.g. to quickly find the pivot points instead of global maximization we
-    perform in this implementation.
-
-    Args:
-        tol (_type_, optional): _description_. Defaults to 1e-8. maxiter
-        (int, optional): _description_. Defaults to 100.
-
-    Returns:
-        NDArrayFloat: _description_
-    """
-    tol = 1e-8
-    maxiter = 100
-    if options is None:
-        options = {"tol": tol, "maxiter": maxiter}
-    tol = options.pop("tol", tol)
-    maxiter = options.pop("maxiter", maxiter)
-
-    eks = [fun]
-    fks = [lambda *x: 0.0]
-    xks = []
-    yks = []
-    cs = []
-    rs = []
-    pivots = []
-
-    # Use factory functions instead of a closure inside the loop. A closure
-    # leads to the wrong functions and grid points (xk, yk) being evaluated.
-    # Common Python gotcha:
-    # https://eev.ee/blog/2011/04/24/gotcha-python-scoping-closures/
-    def fk(f, e, xk, yk):
-        def _fk(x, y):
-            return f(x, y) + e(xk, y) * e(x, yk) / e(xk, yk)
-
-        return _fk
-
-    def ek(e, xk, yk):
-        def _ek(x, y):
-            return e(x, y) - e(xk, y) * e(x, yk) / e(xk, yk)
-
-        return _ek
-
-    def c(e, xk):
-        def _c(y):
-            return e(xk, y)
-
-        return _c
-
-    def r(e, yk):
-        def _r(x):
-            return e(x, yk)
-
-        return _r
-
-    for k in range(maxiter):
-        # TODO: better optimizer for more complex functions.
-        # With default arguments, `shgo` often finds wrong global optima for
-        # more complex functions. One way around it is adding options such as
-        # n=16,
-        # sampling_method="halton"
-        # The downside is much longer runtime. The better solution would be
-        # implementing the heuristic in (Townsend & Trefethen 2013) instead of
-        # attempting to globally optimize at each step.
-        res = scipy.optimize.shgo(
-            lambda x: -np.abs(eks[-1](x[0], x[1])),
-            bounds=((-1, 1), (-1, 1)),
-        )
-        current_error, (xk, yk) = -res.fun, res.x
-        if current_error < tol:
-            break
-
-        pivots.append(1 / eks[-1](xk, yk))
-        cs.append(np.vectorize(c(eks[-1], xk)))
-        rs.append(np.vectorize(r(eks[-1], yk)))
-        fks.append(fk(fks[-1], eks[-1], xk, yk))
-        eks.append(ek(eks[-1], xk, yk))
-        xks.append(xk)
-        yks.append(yk)
-
-    return {
-        "f": fks[-1],
-        "max_error": current_error,
-        "fk": fks,
-        "ek": eks,
-        "xk": xks,
-        "yk": yks,
-        "pivot": pivots,
-        "c": cs,
-        "r": rs,
-        "niter": k,
-    }
-
-
 class EvaluateLCU:
     def __init__(
         self,
@@ -291,17 +191,7 @@ class EvaluateLCU:
                     )
                 ),
             )
-            # self._projector = get_projector_matrix3(
-            #     list(range(self.n_qubits_coeffs + self.n_qubits_block_encoding)),
-            #     list(
-            #         range(
-            #             self.n_qubits_coeffs + self.n_qubits_block_encoding,
-            #             self.n_qubits_coeffs
-            #             + self.n_qubits_block_encoding
-            #             + self.n_qubits_main_register,
-            #         )
-            #     ),
-            # )
+
             self._projected_state_vector = (
                 self.projector.transpose() @ self.state_vector
             )
