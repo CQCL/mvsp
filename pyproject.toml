@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qtmlib"
+version = "0.0.1"
+description = "A python library using pytket to write quantum algorithms"
+requires-python = ">=3.11"
+authors = [{name = "Nathan Fitzpatrick", email = "nathan.fitzpatrick@quantinuum.com" }]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.ruff]
+# Enable flake8-bugbear (`B`) rules, pandas, see https://beta.ruff.rs/docs/rules/
+lint.select = ["E", "F", "B", "RUF","PT","UP", "C4", "D"]
+lint.ignore = ["RUF002"]
+extend-exclude = ["**/*.ipynb", "tests/conftest.py", ".venv/**", "docs/**", "qtmlib/_types/_type_stubs/**"]
+target-version = "py311"
+[tool.lint.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+"tests/conftest.py" = ["D103"]
+
+[tool.lint.ruff.pydocstyle]
+# Use Google-style docstrings.
+convention = "google"
+
+#https://microsoft.github.io/pyright/#/getting-started
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+include = ["qtmlib","tests"]
+ignore = ["**/*.ipynb", ".venv/**", "docs/**"]
+pythonVersion = "3.11"
+typeCheckingMode = "strict"
+stubPath = "qtmlib/_types/_type_stubs"
+reportPrivateUsage = false
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
