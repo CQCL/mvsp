@@ -1,7 +1,7 @@
 pyright
 black
 sphinx
-types-setuptools
+types-pkg-resourcess==0.1
 pytket==1.29
 pytket-qiskit
 pytket-qulacs
