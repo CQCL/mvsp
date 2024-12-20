@@ -2,9 +2,9 @@ pyright
 black
 sphinx
 types-pkg-resources==0.1
-pytket==1.29
-pytket-qiskit
-pytket-quantinuum
+pytket==1.24
+pytket-qiskit==0.48
+pytket-quantinuum==0.29
 pytket-qulacs
 pre-commit
 wheel
