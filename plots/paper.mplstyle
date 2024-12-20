@@ -1,0 +1,14 @@
+font.size: 8
+figure.titlesize: medium
+axes.titlesize: medium
+axes.labelsize: medium
+xtick.labelsize: medium
+ytick.labelsize: medium
+legend.fontsize: small
+legend.title_fontsize: small
+legend.borderpad: 0
+legend.frameon: False
+legend.markerscale: 0.95
+
+# https://tsitsul.in/blog/coloropt/
+axes.prop_cycle: cycler("color", ["#4053d3", "#b51d14", "#ddb310", "#00beff"])
