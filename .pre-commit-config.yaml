@@ -6,10 +6,10 @@ repos:
         args: [ --fix ]
       - id: ruff-format
 
-  - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.364
-    hooks:
-      - id: pyright
+  # - repo: https://github.com/RobertCraigie/pyright-python
+  #   rev: v1.1.364
+  #   hooks:
+  #     - id: pyright
 
   - repo: https://github.com/crate-ci/typos
     rev: v1.24.5
