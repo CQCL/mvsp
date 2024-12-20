@@ -1,6 +1,6 @@
 # mvsp
 
-This is a Python 3.11, 3.12 app called mvsp.
+This is a Python ```3.11```, ```3.12``` app called ```mvsp``` based on ```tket``` that implements the protocol presented in [Quantum state preparation for multivariate functions](https://arxiv.org/abs/2405.21058).
 
 ## Installation
 
@@ -55,3 +55,18 @@ These run on PR and pushes to `main` and `research` via a GitHub action `.github
 
 The same pre-commit hooks are run in the CI via GitHub actions. These ensure local commits should pass the linting and type checking CI. All tests are run in CI. The CO workflows are in `.github/workflows/python_app.yml`.
 
+## Code
+
+The circuit construction is based on two elements, the ```RegisterBox``` and ```QRegs```. The first one contains the gates and operations and the second one is the quantum register that keeps track which qubit the gates act on. The code can be found in ```mvsp/circuits/core``` and one can check the [example notebook](https://github.com/CQCL/mvsp/blob/main/examples/circuits/intro_registerbox.ipynb) for further details.
+
+The main code for this project is found in ```mvsp/circuits/lcu_state_preparation``` with the following files:
+
+- **lcu_state_preparation_block_encoding.py**: contains the circuits to implement the block encodings for both Fourier and Chebyshev basis functions.
+- **lcu_state_preparation.py**: given the basis coefficients, implements the circuit for multivariate state preparation (see Figs. 4 and 5 from the paper).
+
+See the mvsp [example notebook](https://github.com/CQCL/mvsp/blob/main/examples/circuits/LCUStatePreparationBox_example.ipynb) to see how to use these boxes.
+
+In addition to the main code we also provide multiple primitives like qubitisation, select and prepare boxes, and measurement utility functions.
+
+## Hardware experiments
+In ```experiments/hardware``` we have the circuits considered for the hardware experiments performed on the H2-1 trapped-ion quantum compute. We have both the original and compiled circuits, along with their images.
