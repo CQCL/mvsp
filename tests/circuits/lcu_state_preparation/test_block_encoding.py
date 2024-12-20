@@ -4,15 +4,15 @@ import numpy as np
 import pytest
 from numpy.polynomial import Chebyshev
 
-from qtmlib.circuits.core import RegisterCircuit
-from qtmlib.circuits.lcu_state_preparation.lcu_state_preparation import (
+from mvsp.circuits.core import RegisterCircuit
+from mvsp.circuits.lcu_state_preparation.lcu_state_preparation import (
     LCUStatePreparationQReg,
 )
-from qtmlib.circuits.lcu_state_preparation.lcu_state_preparation_block_encoding import (
+from mvsp.circuits.lcu_state_preparation.lcu_state_preparation_block_encoding import (
     ChebychevBlockEncoding,
     FourierBlockEncoding,
 )
-from qtmlib.utils.linalg_utils import (
+from mvsp.utils.linalg_utils import (
     get_projector_matrix,
 )
 

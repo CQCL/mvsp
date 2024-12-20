@@ -1,12 +1,12 @@
 """Test operator expectation value with post selection."""
 
-from qtmlib.measurement.statevector import (
+from mvsp.measurement.statevector import (
     operator_expectation_statevector,
     statevector_postselect,
 )
 from pytket._tket.circuit import Circuit
 from pytket.utils import QubitPauliOperator
-from qtmlib.operators import ising_model
+from mvsp.operators import ising_model
 from pytket.extensions.qiskit.backends.aer import AerStateBackend
 from pytket.extensions.qulacs.backends.qulacs_backend import QulacsBackend
 from numpy.random import rand

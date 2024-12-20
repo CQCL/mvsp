@@ -6,7 +6,7 @@ from pytket.extensions.qulacs.backends.qulacs_backend import QulacsBackend
 import numpy as np
 import pytest
 from pytket.backends.backend import Backend
-from qtmlib.measurement.phase_estimation import measure_phase_estimation
+from mvsp.measurement.phase_estimation import measure_phase_estimation
 import itertools
 
 

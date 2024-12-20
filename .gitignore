@@ -1,4 +1,4 @@
-# qtmlib/.gitignore file contents
+# mvsp/.gitignore file contents
 __pycache__/
 *.pyc
 *.pyo
@@ -11,7 +11,7 @@ __pypackages__/
 *.log
 *.swp
 .DS_Store
-.qtmlib/
+.mvsp/
 *.venv/
 pyenv.cfg
 docs/source/api_reference/*.rst

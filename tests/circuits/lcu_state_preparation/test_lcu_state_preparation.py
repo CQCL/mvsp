@@ -7,18 +7,18 @@ import numpy as np
 import pytest
 from numpy.typing import NDArray
 
-from qtmlib.circuits.lcu_state_preparation.lcu_state_preparation import (
+from mvsp.circuits.lcu_state_preparation.lcu_state_preparation import (
     LCUStatePreparationBox,
     SeparableLCUStatePreparationBox,
 )
-from qtmlib.circuits.lcu_state_preparation.lcu_state_preparation_block_encoding import (
+from mvsp.circuits.lcu_state_preparation.lcu_state_preparation_block_encoding import (
     ChebychevBlockEncoding,
     FourierBlockEncoding,
 )
-from qtmlib.circuits.utils.lcu_state_preparation_utils import (
+from mvsp.circuits.utils.lcu_state_preparation_utils import (
     create_einsum_string,
 )
-from qtmlib.utils.linalg_utils import (
+from mvsp.utils.linalg_utils import (
     get_projector_matrix,
 )
 

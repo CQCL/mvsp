@@ -1,11 +1,11 @@
-"""Test the measurement functions in qtmlib.measurements.shots."""
+"""Test the measurement functions in mvsp.measurements.shots."""
 
 import numpy as np
 from pytket.circuit import Qubit
 from pytket._tket.unit_id import Bit
 from pytket._tket.circuit import Circuit
-from qtmlib.measurement.statevector import statevector_postselect
-from qtmlib.measurement.shots import (
+from mvsp.measurement.statevector import statevector_postselect
+from mvsp.measurement.shots import (
     add_measure_post_select,
     measure_distribution,
     expectation_from_dist,

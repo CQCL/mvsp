@@ -3,9 +3,9 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "qtmlib"
+name = "mvsp"
 version = "0.0.1"
-description = "A python library using pytket to write quantum algorithms"
+description = "A python library using pytket for multivariate state preparation"
 requires-python = ">=3.11"
 authors = [{name = "Nathan Fitzpatrick", email = "nathan.fitzpatrick@quantinuum.com" }]
 
@@ -16,7 +16,7 @@ where = ["."]
 # Enable flake8-bugbear (`B`) rules, pandas, see https://beta.ruff.rs/docs/rules/
 lint.select = ["E", "F", "B", "RUF","PT","UP", "C4", "D"]
 lint.ignore = ["RUF002"]
-extend-exclude = ["**/*.ipynb", "tests/conftest.py", ".venv/**", "docs/**", "qtmlib/_types/_type_stubs/**"]
+extend-exclude = ["**/*.ipynb", "tests/conftest.py", ".venv/**", "docs/**", "mvsp/_types/_type_stubs/**"]
 target-version = "py311"
 [tool.lint.ruff.per-file-ignores]
 "__init__.py" = ["F401"]
@@ -30,11 +30,11 @@ convention = "google"
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
-include = ["qtmlib","tests"]
+include = ["mvsp","tests"]
 ignore = ["**/*.ipynb", ".venv/**", "docs/**"]
 pythonVersion = "3.11"
 typeCheckingMode = "strict"
-stubPath = "qtmlib/_types/_type_stubs"
+stubPath = "mvsp/_types/_type_stubs"
 reportPrivateUsage = false
 
 

@@ -3,7 +3,7 @@
 import numpy as np
 from pytket.circuit import Qubit, QubitRegister
 from pytket._tket.circuit import Circuit, Unitary3qBox
-from qtmlib.measurement.utils import (
+from mvsp.measurement.utils import (
     unitary_postselect,
     circuit_statevector_postselect,
     circuit_unitary_postselect,

@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "qtmlib"
+project = "mvsp"
 copyright = "2023, Nathan Fitzpatrick"
 author = "Nathan Fitzpatrick"
 release = "0.0.1"
