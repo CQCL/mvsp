@@ -1,6 +1,6 @@
 # mvsp
 
-This is a Python 3.11, 3.12 app called qtmlib. It is an internal Quantinuum library which builds on pytket to make building quantum algorithms with pytket easy, leveraging the `Registerbox` abstraction.
+This is a Python 3.11, 3.12 app called mvsp.
 
 ## Installation
 
@@ -30,7 +30,7 @@ Useful extensions:
 - [SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
 - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) (Optional, but very useful for visualizing git history)
 
-qtmlib uses pre-commit via a `.pre-commit-config.yaml`. This runs a series of checks on each local commit to make sure your code is up to the correct standard of the library. It will be annoying at first, but lead to very high code quality. These are:
+mvsp uses pre-commit via a `.pre-commit-config.yaml`. This runs a series of checks on each local commit to make sure your code is up to the correct standard of the library. It will be annoying at first, but lead to very high code quality. These are:
 
 - **Ruff-format**: This is a reformatter. If your code is not formatted correctly, it will be reformatted on the commit. If this happens, just commit again and it should pass the reformatting.
 - **Ruff**: Ruff is the fastest, most modern Python linter written in Rust. Think of it as a code spell checker [Ruff Documentation](https://beta.ruff.rs/docs/). It will keep your code to a good standard and give you lots of warnings and errors as you develop the code. These will also show up in the problems bar (VSCode). If you commit without fixing these, your commit will fail. Ruff also ensures docstrings are formatted correctly, where we use the Google style for readability. If your docstrings are not good enough, you will not be able to commit your code.
