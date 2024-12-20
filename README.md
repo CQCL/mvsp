@@ -34,6 +34,6 @@ In addition to the main code we also provide multiple primitives like qubitisati
 In ```experiments/hardware``` we have the circuits considered for the hardware experiments performed on the H2-1 trapped-ion quantum compute. We have both the original and compiled circuits, along with their images.
 
 ## Chemistry experiments
-In ```mvsp/applications/chemistry``` we have the circuits considered for the chemistry experiments. Where a single particle plane wavefunction was constructed using a nuclear lattice hamiltonian. Various lattices are provided in ```/lattices/lattice.py```. Files to reproduce the paper results are:
-- **examples/circuit_plane_waves.ipynb**: Tutorial on how to construct the plane wave circuit from a lattice hamiltonian.
-- **plotting/chemistry_plotting_script.py**: This will reproduce the plots in the paper for the chemistry experiments. Data and plots are also provided in the ```data``` and ```plots``` folders. 
+In ```mvsp/applications/chemistry``` we have the circuits considered for the chemistry experiments. Where a single particle plane wavefunction was constructed using the Fourier state preparation using a nuclear lattice hamiltonian. Various lattices are provided in ```/lattices/lattice.py```. Files to reproduce the paper results are:
+- **/examples/circuit_plane_waves.ipynb**: [Tutorial on how to construct the plane wave circuit from a lattice hamiltonian](https://github.com/CQCL/mvsp/blob/main/mvsp/applications/chemistry/examples/circuit_plane_waves.ipynb).
+- **/plotting/chemistry_plotting_script.py**: [To reproduce the plots in the paper for the chemistry experiments.](https://github.com/CQCL/mvsp/blob/main/mvsp/applications/chemistry/plotting/chemistry_plotting_script.py) Data and plots are also provided in the ```paper_data``` and ```paper_plots_new``` folders. 
