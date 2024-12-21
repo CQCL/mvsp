@@ -15,3 +15,4 @@ __pypackages__/
 *.venv/
 pyenv.cfg
 docs/source/api_reference/*.rst
+data/hardware_experiment/density_data/
