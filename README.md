@@ -33,6 +33,8 @@ In addition to the main code we also provide multiple primitives like qubitisati
 ## Hardware experiments
 In ```experiments/hardware``` we have the circuits considered for the hardware experiments performed on the H2-1 trapped-ion quantum compute. We have both the original and compiled circuits, along with their images.
 
+The hardware experiment results shown in Fig. 10 of [Quantum state preparation for multivariate functions](https://arxiv.org/abs/2405.21058) are generated with the scripts ```scripts/hardware_experiment_2d_gaussian.py``` (extracting the shown results from the shot data) and ```scripts/hardware_experiment_2d_gaussian_plot.py``` (plotting the extracted results). The plots resulting plots are saved in ```plots/```. The shot data is contained in ```data/hardware_experiment/shots_n9_c7_rho0.*.pkl```.
+
 ## Chemistry experiments
 In ```mvsp/applications/chemistry``` the methods to reproduce the circuits for the chemistry experiments are provided. A single particle plane wavefunction was constructed using the Fourier state preparation using a nuclear lattice hamiltonian. Various lattices are provided in ```/lattices/lattice.py```. Files to reproduce the paper results are:
 - **/examples/circuit_plane_waves.ipynb**: [Tutorial on how to construct the plane wave circuit from a lattice hamiltonian](https://github.com/CQCL/mvsp/blob/main/mvsp/applications/chemistry/examples/circuit_plane_waves.ipynb).
