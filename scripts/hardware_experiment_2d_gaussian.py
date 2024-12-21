@@ -178,7 +178,7 @@ def generate_data(rho: float):
         probs_full_coarse.transpose(), coordinates=[x_d_coarse, y_d_coarse]
     )
 
-    density_switcher = {
+    density_dict = {
         "density_kde_full_coarse": density_kde_full_coarse.data.transpose(),
         "density_kde_x": density_kde_x.data,
         "density_raw_x": density_raw_x.data,
@@ -195,14 +195,13 @@ def generate_data(rho: float):
         "outcomes_y": y_vals,
     }
 
-    folder_path = "../data/hardware_experiment/density_data/"
+    folder_path = "../data/hardware_experiment/"
     os.makedirs(folder_path, exist_ok=True)
 
     print("Save data")
-    for key, value in density_switcher.items():
-        save_path = os.path.join(folder_path, f"{key}_n{n}_c{c}_rho{rho}.pkl")
-        with open(save_path, "wb") as file:
-            pickle.dump(value, file)
+    save_path = os.path.join(folder_path, f"density_dict_n{n}_c{c}_rho{rho}.pkl")
+    with open(save_path, "wb") as file:
+        pickle.dump(density_dict, file)
 
 
 # Hardware: N=9, c=7, rho=0.0

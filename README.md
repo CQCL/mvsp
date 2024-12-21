@@ -33,7 +33,10 @@ In addition to the main code we also provide multiple primitives like qubitisati
 ## Hardware experiments
 In ```experiments/hardware``` we have the circuits considered for the hardware experiments performed on the H2-1 trapped-ion quantum compute. We have both the original and compiled circuits, along with their images.
 
-The hardware experiment results shown in Fig. 10 of [Quantum state preparation for multivariate functions](https://arxiv.org/abs/2405.21058) are generated with the scripts ```scripts/hardware_experiment_2d_gaussian.py``` (extracting the shown results from the shot data) and ```scripts/hardware_experiment_2d_gaussian_plot.py``` (plotting the extracted results). The plots resulting plots are saved in ```plots/```. The shot data is contained in ```data/hardware_experiment/shots_n9_c7_rho0.*.pkl```.
+The hardware experiment results shown in Fig. 10 of [Quantum state preparation for multivariate functions](https://arxiv.org/abs/2405.21058) are generated with the scripts ```scripts/hardware_experiment_2d_gaussian.py``` (extraction and processing of shot data, takes around 5 minutes to run) and ```scripts/hardware_experiment_2d_gaussian_plot.py``` (plotting the extracted results). The plots resulting plots are saved in ```plots/```. The shot data is contained in ```data/hardware_experiment/shots_n9_c7_rho0.*.pkl```.
+
+The results for the kernel density cross validation, shown in Fig. 11, are generated with ```scripts/kde_cross_validation.py``` (takes around 5 minutes). Plots are generated with ```scripts/kde_cross_validation_plot.py```.
+
 
 ## Chemistry experiments
 In ```mvsp/applications/chemistry``` the methods to reproduce the circuits for the chemistry experiments are provided. A single particle plane wavefunction was constructed using the Fourier state preparation using a nuclear lattice hamiltonian. Various lattices are provided in ```/lattices/lattice.py```. Files to reproduce the paper results are:

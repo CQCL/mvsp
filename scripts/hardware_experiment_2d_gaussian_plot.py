@@ -30,34 +30,15 @@ mu_y = 0.5
 s_x = 0.22
 s_y = 0.18
 
-density_switcher = {
-    "density_kde_full_coarse",
-    "density_kde_x",
-    "density_raw_x",
-    "density_raw_kde_x",
-    "density_kde_y",
-    "density_raw_y",
-    "density_raw_kde_y",
-    "density_ground_truth_fourier_x",
-    "density_ground_truth_fourier_y",
-    "density_x_coordinates",
-    "density_y_coordinates",
-    "density_full_coarse_coordinates",
-    "outcomes_x",
-    "outcomes_y",
-}
 
-folder_path = "../data/hardware_experiment/density_data/"
+folder_path = "../data/hardware_experiment/"
 
 # Import data for uncorrelated Gaussian
+print("Load data, uncorrelated Gaussian")
 rho = 0.0
-
-density_dict = {}
-print("Load data")
-for key in density_switcher:
-    load_path = os.path.join(folder_path, f"{key}_n{n}_c{c}_rho{rho}.pkl")
-    with open(load_path, "rb") as file:
-        density_dict[key] = pickle.load(file)
+load_path = os.path.join(folder_path, f"density_dict_n{n}_c{c}_rho{rho}.pkl")
+with open(load_path, "rb") as file:
+    density_dict = pickle.load(file)
 
 
 # Plot uncorrelated Gaussian
@@ -185,14 +166,11 @@ fig.savefig(
 # ======================================================================================
 
 # Import data for correlated Gaussian
+print("Load data, uncorrelated Gaussian")
 rho = 0.4
-
-density_dict = {}
-print("Load data")
-for key in density_switcher:
-    load_path = os.path.join(folder_path, f"{key}_n{n}_c{c}_rho{rho}.pkl")
-    with open(load_path, "rb") as file:
-        density_dict[key] = pickle.load(file)
+load_path = os.path.join(folder_path, f"density_dict_n{n}_c{c}_rho{rho}.pkl")
+with open(load_path, "rb") as file:
+    density_dict = pickle.load(file)
 
 
 # Plot correlated Gaussian
