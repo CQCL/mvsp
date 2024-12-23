@@ -3,7 +3,6 @@ import os
 import pickle
 import re
 import unicodedata
-from typing import Callable, Optional
 
 import numpy as np
 import numpy.typing as npt
@@ -36,6 +35,7 @@ def get_projector_csr_matrix(
     to the index in projection_qubit and not the actual qubit.
 
     Args:
+    ----
         projection_qubits (list[int]): List of qubit indices which are projected out.
         identity_qubits (list[int]): List of qubit indices that remain after projection.
         proj_bit_string (str | None, optional): String specifying a specific state onto
@@ -43,7 +43,9 @@ def get_projector_csr_matrix(
             proj_bit_string is set to "0...0".
 
     Returns:
+    -------
         np.ndarray: Matrix representation of projector.
+
     """
     all_qubits = list(set(projection_qubits + identity_qubits))
     assert min(all_qubits) == 0
@@ -96,6 +98,7 @@ def get_projector_matrix3(
     to the index in projection_qubit and not the actual qubit.
 
     Args:
+    ----
         projection_qubits (list[int]): List of qubit indices which are projected out.
         identity_qubits (list[int]): List of qubit indices that remain after projection.
         proj_bit_string (str | None, optional): String specifying a specific state onto
@@ -103,7 +106,9 @@ def get_projector_matrix3(
             proj_bit_string is set to "0...0".
 
     Returns:
+    -------
         np.ndarray: Matrix representation of projector.
+
     """
     all_qubits = list(set(projection_qubits + identity_qubits))
     assert min(all_qubits) == 0
@@ -138,8 +143,8 @@ class EvaluateLCU:
         self,
         lcu_state_prep: LCUStatePreparationBox,
         backend,
-        compile_only: Optional[bool] = False,
-        compiler_options: Optional[dict] = None,
+        compile_only: bool | None = False,
+        compiler_options: dict | None = None,
     ):
         if compiler_options is None:
             compiler_options = {"optimisation_level": 0}
@@ -282,8 +287,7 @@ class EvaluateLCU:
 
 
 def slugify(value, allow_unicode=False):
-    """
-    Convert to ASCII if 'allow_unicode' is False. Convert spaces or repeated
+    """Convert to ASCII if 'allow_unicode' is False. Convert spaces or repeated
     dashes to single dashes. Remove characters that aren't alphanumerics,
     underscores, or hyphens. Convert to lowercase. Also strip leading and
     trailing whitespace, dashes, and underscores.
@@ -321,7 +325,7 @@ def load_json(basename, path):
     path = os.path.abspath(path)
     filename = f"{basename}.json"
     input_file = os.path.join(path, filename)
-    with open(input_file, "r") as f:
+    with open(input_file) as f:
         resources = json.load(f)
 
     return resources
@@ -413,7 +417,7 @@ def load_max_errors(
     path = os.path.abspath(path)
     filename = suffix + ".json"
     input_file = os.path.join(path, filename)
-    with open(input_file, "r") as f:
+    with open(input_file) as f:
         max_errors = json.load(f)
 
     return max_errors

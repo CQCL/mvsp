@@ -59,13 +59,16 @@ def scaling(a, d, n, dim):
     """Worst-case scaling of the Chebyshev approach with free parameters `a`
 
     Args:
+    ----
         a (_type_): _description_
         d (_type_): _description_
         n (_type_): _description_
         dim (_type_): _description_
 
     Returns:
+    -------
         _type_: _description_
+
     """
     aa = np.ceil(np.log2(d + 1))
     b = np.ceil(np.log2(n))
@@ -76,6 +79,7 @@ def scaling_minimizer(a, d, n2qb, n, dim):
     """Cost function for least square fit.
 
     Args:
+    ----
         a (_type_): _description_
         d (_type_): _description_
         n2qb (_type_): _description_
@@ -83,7 +87,9 @@ def scaling_minimizer(a, d, n2qb, n, dim):
         dim (_type_): _description_
 
     Returns:
+    -------
         _type_: _description_
+
     """
     return scaling(a, d, n, dim) - n2qb
 
@@ -94,11 +100,14 @@ def exp_scaling(a, d):
     In this example use :math:`a[0]*e^{-a[1] * d * log(d)}`.
 
     Args:
+    ----
         a (NDArrayFloat): Array of coefficients for the scaling
         d (float|int): Degree
 
     Returns:
+    -------
         float: Asymptotic scaling of maximum error
+
     """
     return a[0] * np.exp(-a[1] * d * np.log(d))
 
@@ -107,12 +116,15 @@ def exp_scaling_minimizer(a, d, c):
     """Cost function for least-square fit of the maximum error asymptotic scaling.
 
     Args:
+    ----
         a (NDArrayFloat): Array of coefficients. We only need one coefficient a[0]
         d (float | int): Degree
         c (float): Measured maximum error
 
     Returns:
+    -------
         float: Cost to minimize
+
     """
     return exp_scaling(a, d) - c
 
@@ -132,7 +144,7 @@ ax_succ = fig.add_subplot(gs0[1, 1])
 
 labels = [r"$n = 4$", r"$n = 5$", r"$n = 6$"]
 
-for i, (n, label) in enumerate(zip(ns, labels)):
+for i, (n, label) in enumerate(zip(ns, labels, strict=False)):
     # Resources from compilation only, no max_errors_*
     (
         n_1qbs,
@@ -209,7 +221,7 @@ for i, (n, label) in enumerate(zip(ns, labels)):
         markeredgewidth=1.0,
     )
 
-# Compute & plot the asymptotic p_sucess. We assume that the coefficients after
+# Compute & plot the asymptotic p_success. We assume that the coefficients after
 # degree 30 are sufficiently small to not contribute significantly to p_success.
 # This assumption is valid because maximum error is at machine precision at d=30
 asymp_p_success = asymptotic_p_success(

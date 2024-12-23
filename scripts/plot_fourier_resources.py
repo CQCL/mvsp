@@ -56,13 +56,16 @@ def scaling(a, d, n, dim):
     """Worst-case scaling of the Fourier approach with free parameters `a`
 
     Args:
+    ----
         a (_type_): _description_
         d (_type_): _description_
         n (_type_): _description_
         dim (_type_): _description_
 
     Returns:
+    -------
         _type_: _description_
+
     """
     # dim could be inside the ceil but implementation doesn't work that way
     return (
@@ -76,6 +79,7 @@ def scaling_minimizer(a, d, n2qb, n, dim):
     """Cost function for least square fit.
 
     Args:
+    ----
         a (_type_): _description_
         d (_type_): _description_
         n2qb (_type_): _description_
@@ -83,7 +87,9 @@ def scaling_minimizer(a, d, n2qb, n, dim):
         dim (_type_): _description_
 
     Returns:
+    -------
         _type_: _description_
+
     """
     return scaling(a, d, n, dim) - n2qb
 
@@ -111,7 +117,7 @@ ax_succ = fig.add_subplot(gs0[1, 1])
 
 labels = [f"$n = {n}$" for n in ns]
 
-for i, (n, label) in enumerate(zip(ns, labels)):
+for i, (n, label) in enumerate(zip(ns, labels, strict=False)):
     # Resources from compilation only, no max_errors_*
     (
         n_1qbs,
@@ -188,7 +194,7 @@ for i, (n, label) in enumerate(zip(ns, labels)):
     )
 
 
-# Compute & plot the asymptotic p_sucess. We assume that the coefficients after
+# Compute & plot the asymptotic p_success. We assume that the coefficients after
 # degree 63 are sufficiently small to not contribute significantly to p_success.
 # We checked by computing p_success with degree 128, which is visually
 # indistinguishable from p_success at degree 63.

@@ -2,7 +2,6 @@ import logging
 from collections.abc import Iterable
 
 import numpy as np
-from pytket.extensions.qiskit import AerStateBackend
 from mvsp.circuits.lcu_state_preparation.lcu_state_preparation_block_encoding import (
     ChebychevBlockEncoding,
     FourierBlockEncoding,
@@ -27,7 +26,6 @@ def resource_scaling(
     logger=None,
 ):
     """XXX: Note that this function assumes 2D approximations"""
-
     if compiler_options is None:
         compiler_options = {"optimisation_level": 0}
 

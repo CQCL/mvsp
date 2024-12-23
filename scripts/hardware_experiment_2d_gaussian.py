@@ -47,7 +47,7 @@ def generate_data(rho: float):
     mean = np.array([mu_x, mu_y])
     cov = np.array([[s_x**2, rho * s_x * s_y], [rho * s_x * s_y, s_y**2]])
     gauss_fun = gaussian_function(mean=mean, cov=cov)
-    f_coeff = gauss_coefficient_function(mean=mean, cov=cov)    
+    f_coeff = gauss_coefficient_function(mean=mean, cov=cov)
     fourier = FourierExpansion(
         func=gauss_fun,
         coefficient_function=f_coeff,
@@ -61,7 +61,7 @@ def generate_data(rho: float):
     xx, yy = np.meshgrid(x, y)
     pos = np.stack((xx, yy), axis=-1)
     pos = pos.transpose((1, 0, 2))  # x varies along axis 0, i.e. axis 0 is the x-axis
-    
+
     density_ground_truth_fourier = DiscreteDensity(
         fourier(pos), coordinates=[x, y], positivize=True
     )

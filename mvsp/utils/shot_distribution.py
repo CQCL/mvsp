@@ -43,7 +43,9 @@ class ShotDistribution:
             if not isinstance(outcomes_ordered[0], (int, float)):
                 print("Transform outcomes to tuples.")
                 outcomes_ordered = list(map(tuple, outcomes_ordered))
-            self._outcome_density = dict(zip(outcomes_ordered, shot_density.values()))
+            self._outcome_density = dict(
+                zip(outcomes_ordered, shot_density.values(), strict=False)
+            )
         return self._outcome_density
 
     def filtered_outcome_density(self, sigma=1.0, dimension=1, shape=None):
@@ -81,7 +83,7 @@ def generate_outcome_dict(n_qubits, shots_postselect, dim=1):
         outcomes = np.linspace(x_min, x_max, n_all_outcome)
 
         assert len(outcomes) == len(bit_tuples)
-        outcome_dict = dict(zip(map(tuple, bit_tuples), outcomes))
+        outcome_dict = dict(zip(map(tuple, bit_tuples), outcomes, strict=False))
     elif dim == 2:
         assert not n_qubits % 2, "n_qubits must be even for dim = 2."
 
@@ -97,6 +99,6 @@ def generate_outcome_dict(n_qubits, shots_postselect, dim=1):
         outcomes = pos.reshape((np.prod(pos.shape[:2]), 2))
 
         assert len(outcomes) == len(bit_tuples)
-        outcome_dict = dict(zip(map(tuple, bit_tuples), outcomes))
+        outcome_dict = dict(zip(map(tuple, bit_tuples), outcomes, strict=False))
 
     return outcome_dict

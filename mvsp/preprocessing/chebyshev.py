@@ -1,4 +1,4 @@
-from typing import Callable
+from collections.abc import Callable
 
 import numpy as np
 import scipy
@@ -97,10 +97,13 @@ class Chebyshev2D:
         :math:`X=ADB^T`.
 
         Args:
+        ----
             method (str, optional): _description_. Defaults to "dct".
 
         Returns:
+        -------
             _type_: _description_
+
         """
         method = method.lower()
         if method == "full":
@@ -178,12 +181,15 @@ def p(x: NDArrayFloat, s: int, d: int) -> NDArrayFloat:
     ```
 
     Args:
+    ----
         x (NDArrayFloat): Evaluation points
         s (int): Degree of the monomoial
         d (int): Degree of the approximating polynomial
 
     Returns:
+    -------
         NDArrayFloat: Values of the approximating polynomial
+
     """
     lower = 0
     upper = d
@@ -211,10 +217,13 @@ def approx_degree(s: int, delta: float) -> int:
     ```
 
     Args:
+    ----
         s (int): _description_
         delta (float): _description_
 
     Returns:
+    -------
         int: _description_
+
     """
-    return int(min(np.ceil((np.sqrt(2 * s * np.log(2 / delta)))), s))
+    return int(min(np.ceil(np.sqrt(2 * s * np.log(2 / delta))), s))

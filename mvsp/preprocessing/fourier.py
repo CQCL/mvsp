@@ -1,5 +1,5 @@
 from itertools import chain, product
-from typing import Callable
+from collections.abc import Callable
 
 import numpy as np
 import scipy
@@ -38,10 +38,13 @@ class FourierExpansion:
         :math:`X=ADB^T`.
 
         Args:
+        ----
             method (str, optional): _description_. Defaults to "dct".
 
         Returns:
+        -------
             _type_: _description_
+
         """
         method = method.lower()
         if method == "full":
@@ -178,11 +181,14 @@ class Fourier:
             1]`, i.e. it provides a periodic extension with period 2.
 
             Args:
+            ----
                 x (NDArrayFloat): x values
 
             Returns:
+            -------
                 NDArrayFloat: Array of values of the periodically extended
                 function
+
             """
             x = np.array(x)
             assert np.allclose(np.imag(x), 0)
@@ -207,10 +213,13 @@ class Fourier:
         `scipy`'s convention for the FFT.
 
         Args:
+        ----
             degree (int): Degree of the Fourier expansion
 
         Returns:
+        -------
             NDArrayFloat: Array of :math:`2N+1` interpolation points.
+
         """
         N = 2 * degree + 1
         return fftfreq(N, d=0.5)
@@ -239,8 +248,10 @@ class Fourier:
         http://sites.science.oregonstate.edu/~restrepo/475A/Notes/sourcea.pdf
         for details of the computation.
 
-        Returns:
+        Returns
+        -------
             NDArrayFloat: :math:`2N+1` Fourier coefficients
+
         """
         x = self._collocation_points_s(self.degree)
         y = self.fun(x)
@@ -278,11 +289,14 @@ class Fourier2D:
             1]^2`, i.e. it provides a periodic extension with period 2.
 
             Args:
+            ----
                 x (NDArrayFloat): x values y (NDArrayFloat): y values
 
             Returns:
+            -------
                 NDArrayFloat: Array of values of the periodically extended
                 function
+
             """
             x = np.array(x)
             y = np.array(y)
@@ -319,8 +333,10 @@ class Fourier2D:
         Say :math:`A` is the matrix returned by this function, then `A[0,0]` is
         the wave number `(k_0, k_0)` corresponding to the coefficient `C_{00}`.
 
-        Returns:
+        Returns
+        -------
             list[list[tuple]]: Matrix of tuples with integer wave numbers
+
         """
         N = int(2 * self.degree[0] + 1)
         M = int(2 * self.degree[1] + 1)
@@ -346,8 +362,10 @@ class Fourier2D:
         http://sites.science.oregonstate.edu/~restrepo/475A/Notes/sourcea.pdf
         for details of the computation.
 
-        Returns:
+        Returns
+        -------
             NDArrayFloat: Array of size :math:`2N+1 \times 2M+1` of Fourier coefficients
+
         """
         x = Fourier._collocation_points_s(self.degree[0])
         y = Fourier._collocation_points_s(self.degree[1])
