@@ -1,0 +1,33 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Quantum state preparation for multivariate functions
+message: >-
+  If you use this code in your work, please consider citing
+  our corresponding research paper.
+preferred-citation:
+  type: article
+  authors:
+    - given-names: Matthias
+      family-names: Rosenkranz
+    - given-names: Eric
+      family-names: Brunner
+    - given-names: Gabriel
+      family-names: Marin-Sanchez
+    - given-names: Nathan
+      family-names: Fitzpatrick
+    - given-names: Silas
+      family-names: Dilkes
+    - given-names: Yao
+      family-names: Tang
+    - given-names: Yuta
+      family-names: Kikuchi
+    - given-names: Marcello
+      family-names: Benedetti
+  doi: 10.48550/arXiv.2405.21058
+  journal: arXiv
+  title: Quantum state preparation for multivariate functions
+  volume: 2405.21058
+  pages:
+  year: 2024
