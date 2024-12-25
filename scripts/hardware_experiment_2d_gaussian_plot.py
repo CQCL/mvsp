@@ -7,7 +7,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.ticker import ScalarFormatter
 
-plt.style.use("../plots/paper.mplstyle")
+plt.style.use(os.path.abspath("plots/paper.mplstyle"))
 color_cycle = plt.rcParams["axes.prop_cycle"].by_key()["color"]
 
 
@@ -30,9 +30,7 @@ mu_y = 0.5
 s_x = 0.22
 s_y = 0.18
 
-
-folder_path = "../data/hardware_experiment/"
-
+folder_path = os.path.abspath("data/hardware_experiment/")
 # Import data for uncorrelated Gaussian
 print("Load data, uncorrelated Gaussian")
 rho = 0.0
@@ -157,9 +155,11 @@ fig.text(x=0.03, y=0.92, s="(a)")
 fig.text(x=0.25, y=0.92, s="(b)")
 fig.text(x=0.65, y=0.92, s="(c)")
 
-file_path = f"../plots/2D_gauss_fourier_n{n}_c{c}_mu-{mu_x}-{mu_y}_sigma-{s_x}-{s_y}_rho-{rho}_hardware.pdf"
+save_file = os.path.abspath(
+    f"plots/2D_gauss_fourier_n{n}_c{c}_mu-{mu_x}-{mu_y}_sigma-{s_x}-{s_y}_rho-{rho}_hardware.pdf"
+)
 fig.savefig(
-    file_path, transparent=False, bbox_inches="tight", pad_inches="layout", dpi=600
+    save_file, transparent=False, bbox_inches="tight", pad_inches="layout", dpi=600
 )
 
 
@@ -292,7 +292,9 @@ fig.text(x=0.03, y=0.92, s="(d)")
 fig.text(x=0.25, y=0.92, s="(e)")
 fig.text(x=0.65, y=0.92, s="(f)")
 
-file_path = f"../plots/2D_gauss_fourier_n{n}_c{c}_mu-{mu_x}-{mu_y}_sigma-{s_x}-{s_y}_rho-{rho}_hardware.pdf"
+save_file = os.path.abspath(
+    f"plots/2D_gauss_fourier_n{n}_c{c}_mu-{mu_x}-{mu_y}_sigma-{s_x}-{s_y}_rho-{rho}_hardware.pdf"
+)
 fig.savefig(
-    file_path, transparent=False, bbox_inches="tight", pad_inches="layout", dpi=600
+    save_file, transparent=False, bbox_inches="tight", pad_inches="layout", dpi=600
 )

@@ -5,7 +5,7 @@ import pickle
 
 from matplotlib import pyplot as plt
 
-plt.style.use("../plots/paper.mplstyle")
+plt.style.use(os.path.abspath("plots/paper.mplstyle"))
 color_cycle = plt.rcParams["axes.prop_cycle"].by_key()["color"]
 
 # Set parameter
@@ -26,10 +26,10 @@ density_switcher = {
     "bandwidths",
 }
 
-folder_path = "../data/hardware_experiment/"
-
 # Import data
-load_path = os.path.join(folder_path, f"kde_cross_validation_dict_n{n}_c{c}.pkl")
+load_path = os.path.abspath(
+    f"data/hardware_experiment/kde_cross_validation_dict_n{n}_c{c}.pkl"
+)
 with open(load_path, "rb") as file:
     kde_dict = pickle.load(file)
 
@@ -186,10 +186,11 @@ ax[1].set_xlim(1e-3, 1e0)
 ax[1].set_title("Correlated Gaussian")
 
 
-file_dir_path = os.getcwd()
-file_path = f"KDE_optimization_n{n}_c{c}_mu-{mu_x}-{mu_y}_sigma-{s_x}-{s_y}.pdf"
+filename = os.path.abspath(
+    f"plots/KDE_optimization_n{n}_c{c}_mu-{mu_x}-{mu_y}_sigma-{s_x}-{s_y}.pdf"
+)
 fig.savefig(
-    "../plots/" + file_path,
+    filename,
     transparent=False,
     bbox_inches="tight",
     pad_inches="layout",

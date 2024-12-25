@@ -83,7 +83,7 @@ parser.add_argument(
 parser.add_argument(
     "--output-path",
     type=str,
-    default="./data/",
+    default="data/",
     help="Path for output files (./data/)",
 )
 parser.add_argument(

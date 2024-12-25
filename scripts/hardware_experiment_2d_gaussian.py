@@ -24,8 +24,8 @@ def generate_data(rho: float):
     s_y = 0.18
 
     # Import shots
-    read_path = f"../data/hardware_experiment/shots_n{n}_c{c}_rho{rho}.pkl"
-    with open(read_path, "rb") as file:
+    filename = os.path.abspath(f"data/hardware_experiment/shots_n{n}_c{c}_rho{rho}.pkl")
+    with open(filename, "rb") as file:
         shots = pickle.load(file)
 
     n_post_select_qubits = 6
@@ -195,7 +195,7 @@ def generate_data(rho: float):
         "outcomes_y": y_vals,
     }
 
-    folder_path = "../data/hardware_experiment/"
+    folder_path = os.path.abspath("data/hardware_experiment/")
     os.makedirs(folder_path, exist_ok=True)
 
     print("Save data")

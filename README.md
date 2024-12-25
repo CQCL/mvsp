@@ -34,7 +34,7 @@ The repo contains all scripts and data for reproducing the figures in the paper.
 
 ### Basis functions (Fig. 6)
 
-The following snippet generates Fig. 6.
+To reproduce Fig. 6 run
 
 ```sh
 python scripts/plot_basis_functions.py
@@ -44,7 +44,7 @@ The code generates the block encodings for Fourier and Chebyshev basis functions
 
 ### 2D Ricker wavelet via Chebyshev series (Fig. 7)
 
-The following snippet generates Fig. 7.
+To reproduce Fig. 7 run
 
 ```sh
 python scripts/plot_chebyshev_resources.py
@@ -65,7 +65,7 @@ All data can be generated with the following 3 scripts.
 
 ### Bivariate Student's t-distribution via Fourier series (Fig. 8)
 
-The following snippet generates Fig. 8.
+To reproduce Fig. 8 run
 
 ```sh
 python scripts/plot_fourier_resources.py
@@ -85,18 +85,51 @@ The shell scripts for generating resources and simulation data are [`scripts/run
 
 ### Single electron in periodic 3D Coulomb potential (Fig. 9)
 
-The folder  [`mvsp/applications/chemistry`](mvsp/applications/chemistry) provides the methods to reproduce the circuits for the chemistry experiments. A single particle plane wavefunction was constructed using the Fourier state preparation using a nuclear lattice hamiltonian. Various lattices are provided in [`mvsp/applications/chemistry/lattices/lattice.py`](mvsp/applications/chemistry/lattices/lattice.py). Files to reproduce the paper results are:
+To reproduce Fig. 9 run
 
-- [examples/circuit_plane_waves.ipynb](mvsp/applications/chemistry/examples/circuit_plane_waves.ipynb): tutorial on how to construct the plane wave circuit from a lattice Hamiltonian
-- [plotting/chemistry_plotting_script.py](mvsp/applications/chemistry/plotting/chemistry_plotting_script.py): to reproduce the plots in the paper for the chemistry experiments. Data and plots are also provided in the [`data/electron_in_Coulomb_potential`](data/electron_in_Coulomb_potential) and [`plots/electron_in_Coulomb_potential`](plots/electron_in_Coulomb_potential) folders.
+```sh
+python mvsp/applications/chemistry/plotting/chemistry_plotting_script.py
+```
+
+This can take several hours due to the size of the simulated circuits.
+
+The folder  [`mvsp/applications/chemistry`](mvsp/applications/chemistry) provides the methods to reproduce the circuits for the chemistry experiments. A single particle plane wavefunction was constructed using the Fourier state preparation using a nuclear lattice hamiltonian. Various lattices are provided in [`mvsp/applications/chemistry/lattices/lattice.py`](mvsp/applications/chemistry/lattices/lattice.py). We also provide a [tutorial on how to construct plane wave circuit from a lattice Hamiltonian](examples/circuit_plane_waves.ipynb).
+
+Supplementary data and plots are also provided in the folder [`data/electron_in_Coulomb_potential`](data/electron_in_Coulomb_potential) and [`plots/electron_in_Coulomb_potential`](plots/electron_in_Coulomb_potential).
 
 ### Bivariate Gaussian on quantum hardware (Figs. 10-11)
 
-The folder [`data/hardware_experiments/circuits`](data/hardware_experiments/circuits) contains the circuits considered for the hardware experiments performed on the H2-1 trapped-ion quantum computer. We have both the original and compiled circuits, along with iamges of the circuits.
+To reproduce Fig. 10 run
 
-The hardware experiment results shown in Fig. 10 of [Quantum state preparation for multivariate functions](https://arxiv.org/abs/2405.21058) are generated with the scripts [`scripts/hardware_experiment_2d_gaussian.py`](scripts/hardware_experiment_2d_gaussian.py) (extraction and processing of shot data, takes around 5 minutes to run) and [`scripts/hardware_experiment_2d_gaussian_plot.py`](scripts/hardware_experiment_2d_gaussian_plot.py) (plotting the extracted results). The plots resulting plots are saved in `plots/`. The shot data is contained in `data/hardware_experiment/shots_n9_c7_rho0.*.pkl`.
+```sh
+python scripts/hardware_experiment_2d_gaussian_plot.py
+```
 
-The results for the kernel density cross validation, shown in Fig. 11, are generated with [`scripts/kde_cross_validation.py`](scripts/kde_cross_validation.py) (takes around 5 minutes). Plots are generated with [`scripts/kde_cross_validation_plot.py`](scripts/kde_cross_validation_plot.py).
+The shot data from the hardware experiments are stored in `data/hardware_experiment/shots_n9_c7_rho0.*.pkl`. Given this shot data, the data for Fig. 10 (density estimates etc.) can be generated with
+
+```sh
+python scripts/hardware_experiment_2d_gaussian.py
+```
+
+This can take several minutes to run.
+
+To reproduce Fig. 11 in the appendix (kernel density estimate cross validation) run
+
+```sh
+python scripts/kde_cross_validation_plot.py
+```
+
+The data can be generated with
+
+```sh
+python scripts/kde_cross_validation.py
+```
+
+This can take several minutes to run.
+
+#### Circuits for hardware experiments
+
+The folder [`data/hardware_experiments/circuits`](data/hardware_experiments/circuits) contains the circuits used for the hardware experiments performed on the H2-1 trapped-ion quantum computer. We have both the original and compiled circuits, along with iamges of the circuits. This supplementary data is not shown in the paper.
 
 ## Citation
 
