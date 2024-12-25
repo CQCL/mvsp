@@ -1,19 +1,24 @@
 import itertools
-import numpy as np
-from numpy.linalg import eig
+import os
 from time import time
-import matplotlib.pyplot as plt
-from matplotlib.gridspec import GridSpec
-from matplotlib import ticker
-from pandas import DataFrame
-from mvsp.applications.chemistry.lattices import center
-from mvsp.applications.chemistry import plane_wave_hamiltonian
-from mvsp.circuits.lcu_state_preparation import FourierBlockEncoding
-from mvsp.circuits.lcu_state_preparation import LCUStatePreparationBox
-from pytket.extensions.qiskit import AerStateBackend
-from mvsp.measurement.utils import recursive_statevector_postselect
-from mvsp.applications.chemistry.wavefunctions import plane_wave, plane_wave_renorm
 
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import ticker
+from matplotlib.gridspec import GridSpec
+from numpy.linalg import eig, eigh
+from pandas import DataFrame
+from pytket.extensions.qiskit import AerStateBackend
+from scipy.linalg import ishermitian
+
+from mvsp.applications.chemistry import plane_wave_hamiltonian
+from mvsp.applications.chemistry.lattices import center
+from mvsp.applications.chemistry.wavefunctions import plane_wave, plane_wave_renorm
+from mvsp.circuits.lcu_state_preparation import (
+    FourierBlockEncoding,
+    LCUStatePreparationBox,
+)
+from mvsp.measurement.utils import recursive_statevector_postselect
 
 k_neg = 4
 k_min = -k_neg
@@ -38,12 +43,11 @@ zs = np.linspace(0, L, num_points)
 X, Y, Z = np.meshgrid(xs, ys, zs)
 R = np.stack((X, Y, Z), axis=-1)
 
-
 dims_variables = (space_dim, space_dim, space_dim)
 n_qubits = [int(np.ceil(np.log2(d))) for d in dims_variables]
 
 
-def luc_circ(coeffs_array):
+def luc_circ(coeffs_array, title):
     """Generate the LCU state preparation circuit for a given set of coefficients."""
     coeffs_array = coeffs_array.reshape((k_dim, k_dim, k_dim))
 
@@ -80,12 +84,15 @@ def luc_circ(coeffs_array):
             "Depth 2Q": [circ_compiled.depth_2q()],
         }
     )
-    df.to_csv(f"paper_plots/{space_dim}s_{k_dim}k_circ_data.csv")
+    filename = os.path.abspath(
+        f"data/electron_in_Coulomb_potential/{title}_{space_dim}s_{k_dim}k_circ_data.csv"
+    )
+    df.to_csv(filename)
 
     vec = backend.run_circuit(circ_compiled).get_state()
 
     vec_projected = recursive_statevector_postselect(
-        circ_compiled.qubits, vec, post_select.copy()
+        circ_compiled.qubits, vec, lcuspbox.postselect.copy()
     )
 
     vec_projected_scaled = vec_projected
@@ -118,16 +125,29 @@ def plot_3d_scatter_crystal(r_pos, title):
     t0 = time()
     H = plane_wave_hamiltonian(k_point_grid_array, cell_volume, r_pos)
     print(H)
+    print(f"Is H Hermitian? {ishermitian(H)}")
     print("Time taken", time() - t0)
 
+    # eig is not guaranteed to return sorted eigenvalues but we assume correct
+    # ordering below
     e, c = eig(H)
 
     print("Eigenvalues", e)
     print("Coefficients", c)
+    for i in range(2):
+        print(
+            f"Is {i}th eigenvalue/vector correct?",
+            np.allclose(e[i] * c[:, i], H @ c[:, i]),
+        )
 
     coeffs = []
     for i in range(len(e)):
-        coeffs.append({k: coeff for k, coeff in zip(k_point_grid, c[i], strict=False)})
+        coeffs.append(
+            {
+                tuple(k): coeff
+                for k, coeff in zip(k_point_grid_array, c[i], strict=False)
+            }
+        )
 
     res_list = [(c[0], coeffs[0], None), (c[1], coeffs[1], None)]
 
@@ -142,7 +162,7 @@ def plot_3d_scatter_crystal(r_pos, title):
         cax = fig.add_subplot(gs[i, 2])  # Colorbar
 
         np_res = numpy_res(res[1])
-        scatter1 = ax1.scatter(X, Y, Z, c=np_res.flatten(), cmap="RdBu_r")
+        scatter1 = ax1.scatter(X, Y, Z, c=np_res.flatten().real, cmap="RdBu_r")
 
         # Set labels
         ax1.set_xlabel(r"$X$", labelpad=-8, fontsize=7)
@@ -152,19 +172,19 @@ def plot_3d_scatter_crystal(r_pos, title):
         ax1.tick_params(labelsize=7, pad=-3)
 
         if i == 0:
-            ax1.set_title(r"Numerical $\Psi_0(\mathbf{r})$")
+            ax1.set_title(r"Numerical $\Psi_0(\mathbf{r})$", fontsize=8)
         else:
-            ax1.set_title(r"Numerical $\Psi_1(\mathbf{r})$")
+            ax1.set_title(r"Numerical $\Psi_1(\mathbf{r})$", fontsize=8)
 
-        res = luc_circ(res[0])
-        scatter2 = ax2.scatter(X, Y, Z, c=res.flatten(), cmap="RdBu_r")
+        res = luc_circ(res[0], title)
+        scatter2 = ax2.scatter(X, Y, Z, c=res.flatten().real, cmap="RdBu_r")
         cbar = plt.colorbar(
             scatter2,
             cax=cax,
             aspect=2,
             format=ticker.FuncFormatter(lambda x, pos: f"{x * 1e4:.0f}"),
         )  # Use cax for colorbar
-        cax.set_title(r"   $\times 10^{-4}$")
+        cax.set_title(r"   $\times 10^{-4}$", fontsize=8)
         (cbar.set_label(r"$\Psi(\mathbf{r})$", rotation=0, labelpad=10),)
 
         # Set labels
@@ -175,11 +195,15 @@ def plot_3d_scatter_crystal(r_pos, title):
         ax2.tick_params(labelsize=7, pad=-3)
 
         if i == 0:
-            ax2.set_title(r"Circuit $\Psi_0(\mathbf{r})$")
+            ax2.set_title(r"Circuit $\Psi_0(\mathbf{r})$", fontsize=8)
         else:
-            ax2.set_title(r"Circuit $\Psi_1(\mathbf{r})$")
+            ax2.set_title(r"Circuit $\Psi_1(\mathbf{r})$", fontsize=8)
 
-    fig.savefig(f"paper_plots_new/{title}_01_{space_dim}s_{k_dim}k.pdf")
+    filename = os.path.abspath(
+        f"plots/electron_in_Coulomb_potential/{title}_01_{space_dim}s_{k_dim}k.png"
+    )
+    fig.savefig(filename, dpi=300)
 
 
-plot_3d_scatter_crystal(center_lattice, "Center")
+if __name__ == "__main__":
+    plot_3d_scatter_crystal(center_lattice, "center")

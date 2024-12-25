@@ -42,7 +42,7 @@ python scripts/plot_basis_functions.py
 
 The code generates the block encodings for Fourier and Chebyshev basis functions using our protocols and plots them together with the numerical evaluation of the basis functions.
 
-### 2D Ricker wavelet with Chebyshev approach (Fig. 7)
+### 2D Ricker wavelet via Chebyshev series (Fig. 7)
 
 The following snippet generates Fig. 7.
 
@@ -63,7 +63,7 @@ All data can be generated with the following 3 scripts.
 2. [scripts/run_chebyshev_resources.sh](scripts/run_chebyshev_resources.sh): calls [`scripts/compute_resources.py`](scripts/compute_resources.py) for varying polynomial degress and numbers of qubits. This computes the two-qubit gate counts and other resources compiled for the Quantinuum H2-1 native gate set. Compilation details can be adjusted via command line arguments, see the `python scripts/compute_resources.py -h` for details.
 3. [scripts/run_chebyshev_simulations.sh](scripts/run_chebyshev_simulations.sh): works similarly but now also simulates the circuit outputs with the IBM Aer backend. This is separate from the previous script because the simulation takes longer so we generate the data for fewer degrees.
 
-### 2D Student's t-distribution with Fourier approach (Fig. 8)
+### Bivariate Student's t-distribution via Fourier series (Fig. 8)
 
 The following snippet generates Fig. 8.
 
@@ -73,7 +73,7 @@ python scripts/plot_fourier_resources.py
 
 The code uses the data stored in [`data/Fourier_cauchy2d_resource_scaling`](data/Fourier_cauchy2d_resource_scaling).
 
-The data generation is similar to the one described in section [2D Ricker wavelet with Chebyshev approach (Fig. 7)](#2d-ricker-wavelet-with-chebyshev-approach-fig-7).
+The data generation is similar to the one described in section [2D Ricker wavelet via Chebyshev series (Fig. 7)](#2d-ricker-wavelet-via-chebyshev-series-fig-7).
 
 Numerically compute the uniform error of the Fourier approximation of the bivariate Student's t-distribution over $[-1, 1]^2$:
 
@@ -83,14 +83,14 @@ python scripts/max_errors.py -f cauchy2d -t fourier -d `seq 63`
 
 The shell scripts for generating resources and simulation data are [`scripts/run_fourier_resources.sh`](scripts/run_fourier_resources.sh) an [`scripts/run_fourier_simulations.sh`](scripts/run_fourier_simulations.sh).
 
-### Chemistry experiments (Fig. 9)
+### Single electron in periodic 3D Coulomb potential (Fig. 9)
 
 The folder  [`mvsp/applications/chemistry`](mvsp/applications/chemistry) provides the methods to reproduce the circuits for the chemistry experiments. A single particle plane wavefunction was constructed using the Fourier state preparation using a nuclear lattice hamiltonian. Various lattices are provided in [`mvsp/applications/chemistry/lattices/lattice.py`](mvsp/applications/chemistry/lattices/lattice.py). Files to reproduce the paper results are:
 
 - [examples/circuit_plane_waves.ipynb](mvsp/applications/chemistry/examples/circuit_plane_waves.ipynb): tutorial on how to construct the plane wave circuit from a lattice Hamiltonian
-- [plotting/chemistry_plotting_script.py](mvsp/applications/chemistry/plotting/chemistry_plotting_script.py): to reproduce the plots in the paper for the chemistry experiments. Data and plots are also provided in the [`mvsp/applications/chemistry/plotting/paper_data`](mvsp/applications/chemistry/plotting/paper_data) and [`mvsp/applications/chemistry/plotting/paper_plots_new`](mvsp/applications/chemistry/plotting/paper_plots_new) folders.
+- [plotting/chemistry_plotting_script.py](mvsp/applications/chemistry/plotting/chemistry_plotting_script.py): to reproduce the plots in the paper for the chemistry experiments. Data and plots are also provided in the [`data/electron_in_Coulomb_potential`](data/electron_in_Coulomb_potential) and [`plots/electron_in_Coulomb_potential`](plots/electron_in_Coulomb_potential) folders.
 
-### Hardware experiments (Figs. 10-11)
+### Bivariate Gaussian on quantum hardware (Figs. 10-11)
 
 The folder [`data/hardware_experiments/circuits`](data/hardware_experiments/circuits) contains the circuits considered for the hardware experiments performed on the H2-1 trapped-ion quantum computer. We have both the original and compiled circuits, along with iamges of the circuits.
 
