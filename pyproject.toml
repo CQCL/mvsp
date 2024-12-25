@@ -14,7 +14,7 @@ where = ["."]
 
 [tool.ruff]
 # Enable flake8-bugbear (`B`) rules, pandas, see https://beta.ruff.rs/docs/rules/
-lint.select = ["E", "F", "B", "RUF","PT","UP", "C4", "D"]
+lint.select = ["E", "F", "B", "RUF","PT","UP", "C4", "D", "I"]
 lint.ignore = ["RUF002"]
 extend-exclude = ["**/*.ipynb", "tests/conftest.py", ".venv/**", "docs/**", "mvsp/_types/_type_stubs/**"]
 target-version = "py311"
