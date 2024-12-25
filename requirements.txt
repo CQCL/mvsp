@@ -18,7 +18,7 @@ numba
 pandas
 pandas-stubs
 scipy
-sklearn
+scikit-learn
 sympy==1.12
 stim
 nbconvert
