@@ -6,7 +6,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 
-def kenetic(
+def kinetic(
     k_points: NDArray[np.int32],
     hbar: float = 1.0,
     m: float = 1.0,
@@ -139,4 +139,4 @@ def plane_wave_hamiltonian(
     The Hamiltonian matrix.
 
     """
-    return -kenetic(k_points, hbar, m) - elec_nuc_potential(k_points, cell_area, r_pos)
+    return -kinetic(k_points, hbar, m) - elec_nuc_potential(k_points, cell_area, r_pos)

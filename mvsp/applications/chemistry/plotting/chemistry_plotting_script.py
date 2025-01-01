@@ -47,7 +47,7 @@ dims_variables = (space_dim, space_dim, space_dim)
 n_qubits = [int(np.ceil(np.log2(d))) for d in dims_variables]
 
 
-def luc_circ(coeffs_array, title):
+def lcu_circ(coeffs_array, title):
     """Generate the LCU state preparation circuit for a given set of coefficients."""
     coeffs_array = coeffs_array.reshape((k_dim, k_dim, k_dim))
 
@@ -59,7 +59,6 @@ def luc_circ(coeffs_array, title):
         [FourierBlockEncoding(n) for n in n_qubits],
         min_basis_indices=[k_min, k_min, k_min],
     )
-    lcuspbox.get_circuit().n_qubits
 
     print("BOX Qubits:", lcuspbox.n_qubits)
 
@@ -162,7 +161,13 @@ def plot_3d_scatter_crystal(r_pos, title):
         cax = fig.add_subplot(gs[i, 2])  # Colorbar
 
         np_res = numpy_res(res[1])
-        scatter1 = ax1.scatter(X, Y, Z, c=np_res.flatten().real, cmap="RdBu_r")
+        scatter1 = ax1.scatter(
+            X,
+            Y,
+            Z,
+            c=np.real(np_res.flatten()),
+            cmap="RdBu_r",
+        )
 
         # Set labels
         ax1.set_xlabel(r"$X$", labelpad=-8, fontsize=7)
@@ -176,8 +181,14 @@ def plot_3d_scatter_crystal(r_pos, title):
         else:
             ax1.set_title(r"Numerical $\Psi_1(\mathbf{r})$", fontsize=8)
 
-        res = luc_circ(res[0], title)
-        scatter2 = ax2.scatter(X, Y, Z, c=res.flatten().real, cmap="RdBu_r")
+        circ_res = lcu_circ(res[0], title)
+        scatter2 = ax2.scatter(
+            X,
+            Y,
+            Z,
+            c=np.real(circ_res.flatten()),
+            cmap="RdBu_r",
+        )
         cbar = plt.colorbar(
             scatter2,
             cax=cax,
@@ -185,7 +196,7 @@ def plot_3d_scatter_crystal(r_pos, title):
             format=ticker.FuncFormatter(lambda x, pos: f"{x * 1e4:.0f}"),
         )  # Use cax for colorbar
         cax.set_title(r"   $\times 10^{-4}$", fontsize=8)
-        (cbar.set_label(r"$\Psi(\mathbf{r})$", rotation=0, labelpad=10),)
+        cbar.set_label(r"$\Psi(\mathbf{r})$", rotation=0, labelpad=10)
 
         # Set labels
         ax2.set_xlabel(r"$X$", labelpad=-8, fontsize=7)
