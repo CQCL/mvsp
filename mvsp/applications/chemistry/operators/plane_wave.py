@@ -24,7 +24,9 @@ def kinetic(
         The digonal kinetic energy matrix.
 
     """
-    return np.diag([(((hbar) ** 2) * np.dot(k, k) ** 2) / (2 * m) for k in k_points])
+    return np.diag(
+        [(((hbar * np.pi) ** 2) * np.linalg.norm(k) ** 2) / (2 * m) for k in k_points]
+    )
 
 
 def elec_nuc_potential_element(
@@ -64,8 +66,8 @@ def elec_nuc_potential_element(
             mat_element = 0
         else:
             mat_element += (
-                (4 * np.pi) / (cell_area * np.linalg.norm(k_ket - k_bra) ** 2)
-            ) * np.exp(-1j * np.dot(k_ket - k_bra, r))
+                4 / (np.pi * cell_area * np.linalg.norm(k_bra - k_ket) ** 2)
+            ) * np.exp(1j * np.pi * np.dot(k_ket - k_bra, r))
     return i, j, mat_element
 
 
