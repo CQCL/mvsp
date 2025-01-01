@@ -148,11 +148,11 @@ def plot_3d_scatter_crystal(r_pos, title):
         coeffs.append(
             {
                 tuple(k): coeff
-                for k, coeff in zip(k_point_grid_array, c[i], strict=False)
+                for k, coeff in zip(k_point_grid_array, c[:, i], strict=False)
             }
         )
 
-    res_list = [(c[0], coeffs[0], None), (c[1], coeffs[1], None)]
+    res_list = [(c[:, i], coeffs[i], None) for i in range(num_ev)]
 
     fig = plt.figure(figsize=(3.2, 3), constrained_layout=True)
     gs = GridSpec(
