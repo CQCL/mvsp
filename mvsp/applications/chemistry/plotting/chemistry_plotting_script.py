@@ -2,6 +2,7 @@ import itertools
 import os
 from time import time
 
+import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import ticker
@@ -33,7 +34,7 @@ cell_volume = cell_length**3
 
 center_lattice = center(cell_length)
 
-n_space_qubits = 4
+n_space_qubits = 7
 space_dim = 2**n_space_qubits
 num_points = space_dim
 L = 1
@@ -45,6 +46,11 @@ R = np.stack((X, Y, Z), axis=-1)
 
 dims_variables = (space_dim, space_dim, space_dim)
 n_qubits = [int(np.ceil(np.log2(d))) for d in dims_variables]
+
+data_path = os.path.abspath("data/electron_in_Coulomb_potential/")
+os.makedirs(data_path, exist_ok=True)
+plot_path = os.path.abspath("plots/electron_in_Coulomb_potential/")
+os.makedirs(plot_path, exist_ok=True)
 
 
 def lcu_circ(coeffs_array, title):
@@ -83,9 +89,8 @@ def lcu_circ(coeffs_array, title):
             "Depth 2Q": [circ_compiled.depth_2q()],
         }
     )
-    filename = os.path.abspath(
-        f"data/electron_in_Coulomb_potential/{title}_{space_dim}s_{k_dim}k_circ_data.csv"
-    )
+
+    filename = os.path.join(data_path, f"{title}_{space_dim}s_{k_dim}k_circ_data.csv")
     df.to_csv(filename)
 
     vec = backend.run_circuit(circ_compiled).get_state()
@@ -133,6 +138,12 @@ def plot_3d_scatter_crystal(r_pos, title):
     # that eigenvectors are ordered by eigenvalue.
     e, c = eigh(H)
 
+    filename = os.path.join(data_path, f"{title}_{space_dim}s_{k_dim}k_eigen.npz")
+    np.savez(filename, e=e[:num_ev], c=c[:, :num_ev], allow_pickle=False)
+    eigh_input = np.load(filename, allow_pickle=False)
+    e, c = eigh_input["e"], eigh_input["c"]
+    print(c.shape)
+
     # print("Eigenvalues", e)
     # print("Coefficients", c)
     print("Verify eigenvalues/-vectors")
@@ -165,12 +176,17 @@ def plot_3d_scatter_crystal(r_pos, title):
         cax = fig.add_subplot(gs[i, 2])  # Colorbar
 
         np_res = numpy_res(res[1])
-        scatter1 = ax1.scatter(
+        filename = os.path.join(
+            data_path, f"{title}_{i:02}_{space_dim}s_{k_dim}k_np_result.npy"
+        )
+        np.save(filename, np_res.flatten())
+        ax1.scatter(
             X,
             Y,
             Z,
             c=np.real(np_res.flatten()),
             cmap="RdBu_r",
+            norm=mcolors.CenteredNorm(),
         )
 
         # Set labels
@@ -186,12 +202,17 @@ def plot_3d_scatter_crystal(r_pos, title):
             ax1.set_title(r"Numerical $\Psi_1(\mathbf{r})$", fontsize=8)
 
         circ_res = lcu_circ(res[0], title)
+        filename = os.path.join(
+            data_path, f"{title}_{i:02}_{space_dim}s_{k_dim}k_circ_result.npy"
+        )
+        np.save(filename, circ_res.flatten())
         scatter2 = ax2.scatter(
             X,
             Y,
             Z,
             c=np.real(circ_res.flatten()),
             cmap="RdBu_r",
+            norm=mcolors.CenteredNorm(),
         )
         cbar = plt.colorbar(
             scatter2,
@@ -214,9 +235,7 @@ def plot_3d_scatter_crystal(r_pos, title):
         else:
             ax2.set_title(r"Circuit $\Psi_1(\mathbf{r})$", fontsize=8)
 
-    filename = os.path.abspath(
-        f"plots/electron_in_Coulomb_potential/{title}_01_{space_dim}s_{k_dim}k.png"
-    )
+    filename = os.path.join(plot_path, f"{title}_{space_dim}s_{k_dim}k.png")
     fig.savefig(filename, dpi=300)
 
 
