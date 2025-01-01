@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import ticker
 from matplotlib.gridspec import GridSpec
-from numpy.linalg import eig, eigh
+from numpy.linalg import eigh
 from pandas import DataFrame
 from pytket.extensions.qiskit import AerStateBackend
 from scipy.linalg import ishermitian
@@ -121,26 +121,30 @@ def plot_3d_scatter_crystal(r_pos, title):
         title (str): Title of the
 
     """
+    # Consider the first `num_ev` wave functions
+    num_ev = 2
     t0 = time()
     H = plane_wave_hamiltonian(k_point_grid_array, cell_volume, r_pos)
-    print(H)
-    print(f"Is H Hermitian? {ishermitian(H)}")
+    # print(H)
     print("Time taken", time() - t0)
+    print(f"Is H Hermitian? {ishermitian(H)}")
 
-    # eig is not guaranteed to return sorted eigenvalues but we assume correct
-    # ordering below
-    e, c = eig(H)
+    # Use eigh since H is Hermitian (verify from output above). This guarantees
+    # that eigenvectors are ordered by eigenvalue.
+    e, c = eigh(H)
 
-    print("Eigenvalues", e)
-    print("Coefficients", c)
-    for i in range(2):
+    # print("Eigenvalues", e)
+    # print("Coefficients", c)
+    print("Verify eigenvalues/-vectors")
+    for i in range(num_ev):
+        print(f"e_{i}={e[i]}")
         print(
-            f"Is {i}th eigenvalue/vector correct?",
+            f"Is H * v_{i} = e_{i} * v_{i}?",
             np.allclose(e[i] * c[:, i], H @ c[:, i]),
         )
 
     coeffs = []
-    for i in range(len(e)):
+    for i in range(num_ev):
         coeffs.append(
             {
                 tuple(k): coeff
