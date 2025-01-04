@@ -179,7 +179,7 @@ def plot_3d_scatter_crystal(r_pos, title):
         filename = os.path.join(
             data_path, f"{title}_{i:02}_{space_dim}s_{k_dim}k_np_result.npy"
         )
-        np.save(filename, np_res.flatten())
+        np.save(filename, np_res)
         ax1.scatter(
             X,
             Y,
@@ -205,7 +205,7 @@ def plot_3d_scatter_crystal(r_pos, title):
         filename = os.path.join(
             data_path, f"{title}_{i:02}_{space_dim}s_{k_dim}k_circ_result.npy"
         )
-        np.save(filename, circ_res.flatten())
+        np.save(filename, circ_res)
         scatter2 = ax2.scatter(
             X,
             Y,
