@@ -2,11 +2,7 @@ import itertools
 import os
 from time import time
 
-import matplotlib.colors as mcolors
-import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib import ticker
-from matplotlib.gridspec import GridSpec
 from numpy.linalg import eigh
 from pandas import DataFrame
 from pytket.extensions.qiskit import AerStateBackend
@@ -21,7 +17,7 @@ from mvsp.circuits.lcu_state_preparation import (
 )
 from mvsp.measurement.utils import recursive_statevector_postselect
 
-k_neg = 4
+k_neg = 8
 k_min = -k_neg
 k_max = k_neg - 1
 ks = np.arange(k_min, k_max + 1)
@@ -49,8 +45,6 @@ n_qubits = [int(np.ceil(np.log2(d))) for d in dims_variables]
 
 data_path = os.path.abspath("data/electron_in_Coulomb_potential/")
 os.makedirs(data_path, exist_ok=True)
-plot_path = os.path.abspath("plots/electron_in_Coulomb_potential/")
-os.makedirs(plot_path, exist_ok=True)
 
 
 def lcu_circ(coeffs_array, title):
@@ -115,7 +109,7 @@ def numpy_res(coeff_dict):
     return pw_3d_renorm
 
 
-def plot_3d_scatter_crystal(r_pos, title):
+def compute_3d_data(r_pos, title):
     """Plot the 3D scatter plot for the crystal.
 
     For the given crystal, plot the numerical and circuit wavefunctions.
@@ -130,7 +124,6 @@ def plot_3d_scatter_crystal(r_pos, title):
     num_ev = 2
     t0 = time()
     H = plane_wave_hamiltonian(k_point_grid_array, cell_volume, r_pos)
-    # print(H)
     print("Time taken", time() - t0)
     print(f"Is H Hermitian? {ishermitian(H)}")
 
@@ -140,12 +133,7 @@ def plot_3d_scatter_crystal(r_pos, title):
 
     filename = os.path.join(data_path, f"{title}_{space_dim}s_{k_dim}k_eigen.npz")
     np.savez(filename, e=e[:num_ev], c=c[:, :num_ev], allow_pickle=False)
-    eigh_input = np.load(filename, allow_pickle=False)
-    e, c = eigh_input["e"], eigh_input["c"]
-    print(c.shape)
 
-    # print("Eigenvalues", e)
-    # print("Coefficients", c)
     print("Verify eigenvalues/-vectors")
     for i in range(num_ev):
         print(f"e_{i}={e[i]}")
@@ -165,79 +153,19 @@ def plot_3d_scatter_crystal(r_pos, title):
 
     res_list = [(c[:, i], coeffs[i], None) for i in range(num_ev)]
 
-    fig = plt.figure(figsize=(3.2, 3), constrained_layout=True)
-    gs = GridSpec(
-        len(res_list), 3, figure=fig, width_ratios=[1, 1, 0.08], wspace=0.32
-    )  # 3 columns: 2 for plots, 1 for colorbar
-
     for i, res in enumerate(res_list):
-        ax1 = fig.add_subplot(gs[i, 0], projection="3d")  # First plot
-        ax2 = fig.add_subplot(gs[i, 1], projection="3d")  # Second plot
-        cax = fig.add_subplot(gs[i, 2])  # Colorbar
-
         np_res = numpy_res(res[1])
         filename = os.path.join(
             data_path, f"{title}_{i:02}_{space_dim}s_{k_dim}k_np_result.npy"
         )
         np.save(filename, np_res)
-        ax1.scatter(
-            X,
-            Y,
-            Z,
-            c=np.real(np_res.flatten()),
-            cmap="RdBu_r",
-            norm=mcolors.CenteredNorm(),
-        )
-
-        # Set labels
-        ax1.set_xlabel(r"$X$", labelpad=-8, fontsize=7)
-        ax1.set_ylabel(r"$Y$", labelpad=-8, fontsize=7)
-        ax1.set_zlabel(r"$Z$", labelpad=-8, fontsize=7)
-
-        ax1.tick_params(labelsize=7, pad=-3)
-
-        if i == 0:
-            ax1.set_title(r"Numerical $\Psi_0(\mathbf{r})$", fontsize=8)
-        else:
-            ax1.set_title(r"Numerical $\Psi_1(\mathbf{r})$", fontsize=8)
 
         circ_res = lcu_circ(res[0], title)
         filename = os.path.join(
             data_path, f"{title}_{i:02}_{space_dim}s_{k_dim}k_circ_result.npy"
         )
         np.save(filename, circ_res)
-        scatter2 = ax2.scatter(
-            X,
-            Y,
-            Z,
-            c=np.real(circ_res.flatten()),
-            cmap="RdBu_r",
-            norm=mcolors.CenteredNorm(),
-        )
-        cbar = plt.colorbar(
-            scatter2,
-            cax=cax,
-            aspect=2,
-            format=ticker.FuncFormatter(lambda x, pos: f"{x * 1e4:.0f}"),
-        )  # Use cax for colorbar
-        cax.set_title(r"   $\times 10^{-4}$", fontsize=8)
-        cbar.set_label(r"$\Psi(\mathbf{r})$", rotation=0, labelpad=10)
-
-        # Set labels
-        ax2.set_xlabel(r"$X$", labelpad=-8, fontsize=7)
-        ax2.set_ylabel(r"$Y$", labelpad=-8, fontsize=7)
-        ax2.set_zlabel(r"$Z$", labelpad=-8, fontsize=7)
-
-        ax2.tick_params(labelsize=7, pad=-3)
-
-        if i == 0:
-            ax2.set_title(r"Circuit $\Psi_0(\mathbf{r})$", fontsize=8)
-        else:
-            ax2.set_title(r"Circuit $\Psi_1(\mathbf{r})$", fontsize=8)
-
-    filename = os.path.join(plot_path, f"{title}_{space_dim}s_{k_dim}k.png")
-    fig.savefig(filename, dpi=300)
 
 
 if __name__ == "__main__":
-    plot_3d_scatter_crystal(center_lattice, "center")
+    compute_3d_data(center_lattice, "center")
