@@ -91,11 +91,9 @@ To reproduce Fig. 9 run
 python scripts/plot_chemistry_data.py
 ```
 
-The code uses the data stored in [`data/electron_in_Coulomb_potential`](data/electron_in_Coulomb_potential). This data folder also contains .csv files with the number of qubits and 2-qubit gates used in Table 2 of the paper, extracted from the generated circuits.
+The code uses the data stored in [`data/electron_in_Coulomb_potential`](data/electron_in_Coulomb_potential). This data folder also contains csv files with the number of qubits and 2-qubit gates used in Table 2 of the paper.
 
 The folder  [`mvsp/applications/chemistry`](mvsp/applications/chemistry) provides the methods to reproduce the circuits for the chemistry experiments. A single particle plane wavefunction was constructed using the Fourier state preparation using a nuclear lattice hamiltonian. Various lattices are provided in [`mvsp/applications/chemistry/lattices/lattice.py`](mvsp/applications/chemistry/lattices/lattice.py). We also provide a [tutorial on how to construct plane wave circuit from a lattice Hamiltonian](examples/circuit_plane_waves.ipynb).
-
-Supplementary data and plots are also provided in the folder [`data/electron_in_Coulomb_potential`](data/electron_in_Coulomb_potential) and [`plots/electron_in_Coulomb_potential`](plots/electron_in_Coulomb_potential).
 
 The data can be generated with
 
@@ -103,8 +101,7 @@ The data can be generated with
 python scripts/compute_chemistry_data.py
 ```
 
-Various parameters such as spatial grid, number of plane waves etc. can be adjusted in the file.
-
+Various parameters such as spatial grid size, number of plane waves etc. can be adjusted in this script. Its output includes the full wavefunctions as .npy files, eigenvalues and -vectors of the electronic Hamiltonian in the Fourier basis (i.e. coefficients of the Fourier expansion of the wave function) as .npz files, as well as the csv files with basic resources of the compiled circuits. The folder [`data/electron_in_Coulomb_potential`](data/electron_in_Coulomb_potential) contains as supplementary data the outputs for different numbers of plane waves in the wave function expansion.
 
 ### Bivariate Gaussian on quantum hardware (Figs. 10-11)
 

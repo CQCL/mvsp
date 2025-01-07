@@ -17,7 +17,7 @@ from mvsp.circuits.lcu_state_preparation import (
 )
 from mvsp.measurement.utils import recursive_statevector_postselect
 
-k_neg = 8
+k_neg = 4
 k_min = -k_neg
 k_max = k_neg - 1
 ks = np.arange(k_min, k_max + 1)
@@ -30,7 +30,7 @@ cell_volume = cell_length**3
 
 center_lattice = center(cell_length)
 
-n_space_qubits = 7
+n_space_qubits = 4
 space_dim = 2**n_space_qubits
 num_points = space_dim
 L = 1

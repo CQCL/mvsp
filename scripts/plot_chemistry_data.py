@@ -49,7 +49,7 @@ def set_vmin_vmax(data: npt.ArrayLike) -> tuple[float, float]:
 
 plt.style.use(os.path.abspath("plots/paper.mplstyle"))
 data_path = os.path.abspath("data/electron_in_Coulomb_potential/")
-plot_path = os.path.abspath("plots/electron_in_Coulomb_potential/")
+plot_path = os.path.abspath("plots/")
 
 title = "center"
 n_space_qubits = 7
@@ -140,7 +140,7 @@ for i, ax in enumerate(axs):
         num_or_circ = "Numerical"
     else:
         num_or_circ = "Circuit"
-    ax.set_title(rf"{num_or_circ} $|\Psi_{i % num_rows}" + r"(\mathbf{r})|^2$")
+    ax.set_title(rf"{num_or_circ} $|\psi_{i % num_rows}" + r"(\mathbf{r})|^2$")
 
 cbar = plt.colorbar(
     plots[0],
