@@ -142,12 +142,14 @@ The folder [`data/hardware_experiments/circuits`](data/hardware_experiments/circ
 If you use this code in your work, please consider citing our corresponding research paper.
 
 ```text
-@misc{rosenkranzQuantumStatePreparation2024,
+@article{rosenkranzQuantumStatePreparation2025,
   title = {Quantum State Preparation for Multivariate Functions},
   author = {Rosenkranz, Matthias and Brunner, Eric and {Marin-Sanchez}, Gabriel and Fitzpatrick, Nathan and Dilkes, Silas and Tang, Yao and Kikuchi, Yuta and Benedetti, Marcello},
-  year = {2024},
-  number = {arXiv:2405.21058},
-  publisher = {arXiv},
+  year = {2025},
+  journal = {Quantum},
+  volume = {9},
+  pages = {1703},
+  doi = {10.22331/q-2025-04-09-1703},
   eprint = {2405.21058},
   archiveprefix = {arXiv},
   primaryClass = {quant-ph}

@@ -25,9 +25,9 @@ preferred-citation:
       family-names: Kikuchi
     - given-names: Marcello
       family-names: Benedetti
-  doi: 10.48550/arXiv.2405.21058
-  journal: arXiv
+  doi: 10.22331/q-2025-04-09-1703
+  journal: Quantum
   title: Quantum state preparation for multivariate functions
-  volume: 2405.21058
-  pages:
-  year: 2024
+  volume: 9
+  pages: 1703
+  year: 2025
